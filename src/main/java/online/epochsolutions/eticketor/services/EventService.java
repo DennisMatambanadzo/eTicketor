@@ -5,9 +5,13 @@ import online.epochsolutions.eticketor.models.Event;
 import online.epochsolutions.eticketor.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class EventService{
     private EventRepository eventRepository;
+
 
     public EventService(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
@@ -24,5 +28,19 @@ public class EventService{
         event.setSlots(eventBody.getSlots());
         event.setAgeLimit(eventBody.getAgeLimit());
         eventRepository.save(event);
+    }
+
+    public List<Event> getEvents() {
+        return eventRepository.findAll();
+    }
+
+    public Optional<Event> getEvent(Long id) {
+        return eventRepository.findById(id);
+    }
+
+    public void deleteEvent(Long id) {
+        var findById = eventRepository.findById(id);
+        findById.ifPresent(event -> eventRepository.deleteById(id));
+
     }
 }
