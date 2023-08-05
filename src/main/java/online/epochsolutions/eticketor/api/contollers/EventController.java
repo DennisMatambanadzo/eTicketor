@@ -3,6 +3,7 @@ package online.epochsolutions.eticketor.api.contollers;
 import online.epochsolutions.eticketor.api.dtos.EventBody;
 import online.epochsolutions.eticketor.models.Event;
 import online.epochsolutions.eticketor.services.EventService;
+import online.epochsolutions.eticketor.services.TicketService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +15,29 @@ import java.util.Optional;
 public class EventController {
 
     private EventService eventService;
+    private TicketService ticketService;
 
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService, TicketService ticketService) {
         this.eventService = eventService;
+        this.ticketService = ticketService;
     }
 
     @PostMapping("/save")
     public ResponseEntity saveEvent(@RequestBody EventBody eventBody){
+        //event creation
         eventService.saveEvent(eventBody);
+        /*create tickets as soon as the event is created
+        * get from eventBody:
+        * # of slots/tickets to be created
+        * startTime
+        * endTime
+        * ticketPrice
+        * name of event
+        * location of event
+        * */
+        ticketService.createTickets(eventBody.getSlots(),
+                eventBody.getStartTime(),eventBody.getEndTime(),eventBody.getPrice(),
+        eventBody.getName(),eventBody.getLocation());
         return ResponseEntity.ok().build();
     }
 

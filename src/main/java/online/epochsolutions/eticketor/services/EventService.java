@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class EventService{
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
 
     public EventService(EventRepository eventRepository) {
