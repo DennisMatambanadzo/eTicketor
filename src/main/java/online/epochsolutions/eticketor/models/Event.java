@@ -20,7 +20,7 @@ public class Event {
     private String location;
 
     @Column(name = "slots", nullable = false)
-    private Long slots;
+    private Long numberOfTickets;
 
     @Column(name = "start_time", nullable = false)
     private Instant startTime;

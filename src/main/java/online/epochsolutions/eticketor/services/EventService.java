@@ -25,7 +25,7 @@ public class EventService{
         event.setEndTime(eventBody.getEndTime());
         event.setStartTime(eventBody.getStartTime());
         event.setPrice(eventBody.getPrice());
-        event.setSlots(eventBody.getSlots());
+        event.setNumberOfTickets(eventBody.getNumberOfTickets());
         event.setAgeLimit(eventBody.getAgeLimit());
         eventRepository.save(event);
     }

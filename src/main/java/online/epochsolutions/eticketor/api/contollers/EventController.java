@@ -27,17 +27,13 @@ public class EventController {
         //event creation
         eventService.saveEvent(eventBody);
         /*create tickets as soon as the event is created
-        * get from eventBody:
-        * # of slots/tickets to be created
-        * startTime
-        * endTime
-        * ticketPrice
-        * name of event
-        * location of event
-        * */
-        ticketService.createTickets(eventBody.getSlots(),
-                eventBody.getStartTime(),eventBody.getEndTime(),eventBody.getPrice(),
-        eventBody.getName(),eventBody.getLocation());
+        */
+        for (int i = 0; i< eventBody.getNumberOfTickets(); i++){
+            ticketService.createTickets(eventBody.getNumberOfTickets(),
+                    eventBody.getStartTime(),eventBody.getEndTime(),eventBody.getPrice(),
+                    eventBody.getName(),eventBody.getLocation());
+        }
+
         return ResponseEntity.ok().build();
     }
 

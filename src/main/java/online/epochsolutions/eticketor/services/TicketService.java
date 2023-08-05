@@ -17,20 +17,29 @@ public class TicketService {
     }
 
 //Method to create Tickets
-    public void createTickets(Long slots, Instant startTime, Instant endTime, Double price, String name, String location){
+    public void createTickets(Long numberOfTickets, Instant startTime, Instant endTime, Double price, String name, String location){
         Ticket ticket = new Ticket();
-        ArrayList<Ticket> ticketList = new ArrayList<>();
+        ticket.setName(name);
+        ticket.setPrice(price);
+        ticket.setStartTime(startTime);
+        ticket.setEndTime(endTime);
+        ticket.setLocation(location);
+        ticket.setSection(Section.VIP);
+        ticketRepository.save(ticket);
 
 
-        for(int i = 0;i<slots;i++){
-            ticket.setName(name);
-            ticket.setPrice(price);
-            ticket.setStartTime(startTime);
-            ticket.setEndTime(endTime);
-            ticket.setLocation(location);
-            ticket.setSection(Section.VIP);
-            ticketList.add(ticket);
-        }
-        ticketRepository.saveAll(ticketList);
+//        ArrayList<Ticket> ticketList = new ArrayList<>();
+//
+//
+//        for(int i = 0;i<slots;i++){
+//            ticket.setName(name);
+//            ticket.setPrice(price);
+//            ticket.setStartTime(startTime);
+//            ticket.setEndTime(endTime);
+//            ticket.setLocation(location);
+//            ticket.setSection(Section.VIP);
+//            ticketList.add(ticket);
+//        }
+//        ticketRepository.saveAll(ticketList);
     }
 }
