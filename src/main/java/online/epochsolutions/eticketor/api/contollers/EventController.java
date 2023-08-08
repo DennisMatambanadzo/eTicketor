@@ -1,6 +1,7 @@
 package online.epochsolutions.eticketor.api.contollers;
 
 import online.epochsolutions.eticketor.api.dtos.EventBody;
+import online.epochsolutions.eticketor.api.dtos.EventResponse;
 import online.epochsolutions.eticketor.models.Event;
 import online.epochsolutions.eticketor.services.EventService;
 import online.epochsolutions.eticketor.services.TicketService;
@@ -23,18 +24,20 @@ public class EventController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity saveEvent(@RequestBody EventBody eventBody){
+    public ResponseEntity<EventResponse> saveEvent(@RequestBody EventBody eventBody){
         //event creation
         eventService.saveEvent(eventBody);
-        /*create tickets as soon as the event is created
-        */
-        for (int i = 0; i< eventBody.getNumberOfTickets(); i++){
-            ticketService.createTickets(eventBody.getNumberOfTickets(),
-                    eventBody.getStartTime(),eventBody.getEndTime(),eventBody.getPrice(),
-                    eventBody.getName(),eventBody.getLocation());
-        }
+        EventResponse response = new EventResponse();
+        response.setName(eventBody.getName());
+        response.setEventDescription(eventBody.getEventDescription());;
+        response.setStartTime(eventBody.getStartTime());
+        response.setEndTime(eventBody.getEndTime());
+        response.setAgeLimit(eventBody.getAgeLimit());
+        response.setLocation(eventBody.getLocation());
+        response.setNumberOfTickets(eventBody.getNumberOfTickets());
+        response.setPrice(eventBody.getPrice());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/events")
