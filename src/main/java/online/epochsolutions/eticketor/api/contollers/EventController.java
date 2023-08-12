@@ -1,5 +1,6 @@
 package online.epochsolutions.eticketor.api.contollers;
 
+import online.epochsolutions.eticketor.api.dtos.DeleteResponse;
 import online.epochsolutions.eticketor.api.dtos.EventBody;
 import online.epochsolutions.eticketor.api.dtos.EventResponse;
 import online.epochsolutions.eticketor.models.Event;
@@ -50,10 +51,12 @@ public class EventController {
         return ResponseEntity.ok(eventService.getEvent(id));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity deleteEvent(@RequestParam Long id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<DeleteResponse> deleteEvent(@PathVariable Long id){
         eventService.deleteEvent(id);
-        return ResponseEntity.ok().build();
+        DeleteResponse response = new DeleteResponse();
+        response.setMessage("Event deleted");
+        return ResponseEntity.ok(response);
     }
     @PutMapping("/update")
     public ResponseEntity<EventResponse> updateEvent(@RequestParam Long id, @RequestBody Event event){
