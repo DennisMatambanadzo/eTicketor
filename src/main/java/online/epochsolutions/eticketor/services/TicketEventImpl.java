@@ -5,6 +5,7 @@ import online.epochsolutions.eticketor.models.Section;
 import online.epochsolutions.eticketor.models.Ticket;
 import online.epochsolutions.eticketor.repositories.EventRepository;
 import online.epochsolutions.eticketor.repositories.TicketRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,6 +20,7 @@ public class TicketEventImpl {
         this.eventRepository = eventRepository;
     }
 
+//    @Cacheable(cacheNames = "tickets", value = "#event.numberOfTickets")
     public Ticket createTicket(String name) {
         Optional<Event> opEvent = eventRepository.findByNameIgnoreCase(name);
         if (opEvent.isPresent()){
@@ -30,6 +32,9 @@ public class TicketEventImpl {
             ticket.setSection(Section.STANDARD);
             ticket.setPrice(event.getPrice());
             ticket.setStartTime(event.getStartTime());
+            var nOT = opEvent.get().getNumberOfTickets();
+            event.setNumberOfTickets(nOT--);
+            eventRepository.save(event);
             ticketRepository.save(ticket);
             return ticket;
         }else{

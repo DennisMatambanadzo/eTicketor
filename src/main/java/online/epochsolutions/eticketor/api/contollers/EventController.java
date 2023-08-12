@@ -40,20 +40,34 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/events")
+    @GetMapping("/getList")
     public ResponseEntity<List<Event>> getEvents(){
         return ResponseEntity.ok(eventService.getEvents());
     }
 
-    @GetMapping("/events/")
+    @GetMapping("/getEvent")
     public ResponseEntity<Optional<Event>> getEvent(@RequestParam Long id){
         return ResponseEntity.ok(eventService.getEvent(id));
     }
 
-    @DeleteMapping("/events/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity deleteEvent(@RequestParam Long id){
         eventService.deleteEvent(id);
         return ResponseEntity.ok().build();
+    }
+    @PutMapping("/update")
+    public ResponseEntity<EventResponse> updateEvent(@RequestParam Long id, @RequestBody Event event){
+        eventService.updateEvent(id,event);
+        EventResponse response = new EventResponse();
+        response.setName(event.getName());
+        response.setEventDescription(event.getEventDescription());;
+        response.setStartTime(event.getStartTime());
+        response.setEndTime(event.getEndTime());
+        response.setAgeLimit(event.getAgeLimit());
+        response.setLocation(event.getLocation());
+        response.setNumberOfTickets(event.getNumberOfTickets());
+        response.setPrice(event.getPrice());
+        return ResponseEntity.ok(response);
     }
 //TODO: Add Update and fix Delete functions
 
