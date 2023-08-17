@@ -45,4 +45,7 @@ public class EventService{
         findById.ifPresent(event -> eventRepository.deleteById(id));
 
     }
+    public List<Event> getEventByUser(User user){
+        return eventRepository.findByUser(user);
+    }
 }

@@ -37,11 +37,19 @@ public class EventController {
         return ResponseEntity.ok(eventService.getEvent(id));
     }
 
+    @GetMapping("/events/user")
+    public ResponseEntity<List<Event>> getEventsByUser(@AuthenticationPrincipal User user){
+        return ResponseEntity.ok(eventService.getEventByUser(user));
+
+    }
+
     @DeleteMapping("/events/delete")
     public ResponseEntity deleteEvent(@RequestParam Long id){
         eventService.deleteEvent(id);
         return ResponseEntity.ok().build();
     }
+
+
 //TODO: Add Update and fix Delete functions
 
 }
