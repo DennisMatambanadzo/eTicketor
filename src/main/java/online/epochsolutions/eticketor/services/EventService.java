@@ -46,4 +46,11 @@ public class EventService{
 
     }
 
+    public List<Event> getEventsByUser(User user) {
+        return eventRepository.findByUser(user);
+    }
+
+    public int updateEvent(Long numberOfTickets,String name, User user) {
+        return eventRepository.updateEvent(numberOfTickets,name,user);
+    }
 }
