@@ -7,11 +7,12 @@ import online.epochsolutions.eticketor.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class EventService{
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
 
     public EventService(EventRepository eventRepository) {
@@ -41,11 +42,8 @@ public class EventService{
     }
 
     public void deleteEvent(Long id) {
-        var findById = eventRepository.findById(id);
-        findById.ifPresent(event -> eventRepository.deleteById(id));
+      eventRepository.deleteById(id);
 
     }
-    public List<Event> getEventByUser(User user){
-        return eventRepository.findByUser(user);
-    }
+
 }

@@ -69,6 +69,7 @@
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
             <version>3.9.6</version>
+            <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
     </dependencies>
