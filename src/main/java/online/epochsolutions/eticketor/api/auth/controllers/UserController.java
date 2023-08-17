@@ -7,8 +7,10 @@ import online.epochsolutions.eticketor.api.dtos.LoginResponse;
 import online.epochsolutions.eticketor.api.dtos.RegisterBody;
 import online.epochsolutions.eticketor.api.dtos.RegisterResponse;
 import online.epochsolutions.eticketor.exceptions.UserAlreadyExistsException;
+import online.epochsolutions.eticketor.models.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,8 +27,8 @@ public class UserController {
         try{
             userService.registerUser(registerBody);
             RegisterResponse response = new RegisterResponse();
-            response.setSuccess(true);
-            response.setMessage(registerBody.getFirstName()+", you have been registered");
+            response.setFirstName(registerBody.getFirstName() +", you have been registered");
+            response.setEmail(registerBody.getEmail());
             return ResponseEntity.ok(response);
         }catch (UserAlreadyExistsException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -44,6 +46,11 @@ public class UserController {
             loginResponse.setJwt(jwt);
             return ResponseEntity.ok(loginResponse);
         }
+    }
+
+    @GetMapping("/me")
+    public User getLoggedInUserProfile(@AuthenticationPrincipal User user){
+        return user;
     }
 
 }

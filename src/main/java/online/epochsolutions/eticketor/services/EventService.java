@@ -2,6 +2,7 @@ package online.epochsolutions.eticketor.services;
 
 import online.epochsolutions.eticketor.api.dtos.EventBody;
 import online.epochsolutions.eticketor.models.Event;
+import online.epochsolutions.eticketor.models.User;
 import online.epochsolutions.eticketor.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +18,16 @@ public class EventService{
         this.eventRepository = eventRepository;
     }
 
-    public void saveEvent(EventBody eventBody){
+    public void saveEvent(EventBody eventBody,User user){
         Event event = new Event();
+        event.setUser(user);
         event.setName(eventBody.getName());
         event.setEventDescription(eventBody.getEventDescription());
         event.setLocation(eventBody.getLocation());
         event.setEndTime(eventBody.getEndTime());
         event.setStartTime(eventBody.getStartTime());
         event.setPrice(eventBody.getPrice());
-        event.setSlots(eventBody.getSlots());
+        event.setNumberOfTickets(eventBody.getNumberOfTickets());
         event.setAgeLimit(eventBody.getAgeLimit());
         eventRepository.save(event);
     }

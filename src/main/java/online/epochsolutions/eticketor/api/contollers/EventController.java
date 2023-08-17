@@ -2,8 +2,10 @@ package online.epochsolutions.eticketor.api.contollers;
 
 import online.epochsolutions.eticketor.api.dtos.EventBody;
 import online.epochsolutions.eticketor.models.Event;
+import online.epochsolutions.eticketor.models.User;
 import online.epochsolutions.eticketor.services.EventService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +22,8 @@ public class EventController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity saveEvent(@RequestBody EventBody eventBody){
-        eventService.saveEvent(eventBody);
+    public ResponseEntity saveEvent(@RequestBody EventBody eventBody, @AuthenticationPrincipal User user){
+        eventService.saveEvent(eventBody,user);
         return ResponseEntity.ok().build();
     }
 
