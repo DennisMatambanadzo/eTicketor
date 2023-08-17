@@ -35,11 +35,15 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginBody loginBody){
-
-       userService.loginUser(loginBody);
-       LoginResponse loginResponse = new LoginResponse();
-       loginResponse.setMessage("Logged in");
-       return ResponseEntity.ok(loginResponse);
+        String jwt = userService.loginUser(loginBody);
+        if(jwt == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } else {
+            userService.loginUser(loginBody);
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.setJwt(jwt);
+            return ResponseEntity.ok(loginResponse);
+        }
     }
 
 }
