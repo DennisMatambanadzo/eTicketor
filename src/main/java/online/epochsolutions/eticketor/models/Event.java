@@ -41,9 +41,4 @@ public class Event {
     @Column(name = "name", nullable = false)
     private String name;
 
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
 }
