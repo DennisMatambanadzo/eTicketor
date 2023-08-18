@@ -20,6 +20,8 @@ public interface EventRepository extends ListCrudRepository<Event, Long> {
     int updateEvent(Long numberOfTickets, String name, User user);
     List<Event> findByUser(User user);
 
+    Optional<Event> findByIdAndUser(Long id, User user);
+
 
 
 }

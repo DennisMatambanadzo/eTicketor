@@ -69,18 +69,18 @@ public class EventController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<EventResponse> updateEvent(@AuthenticationPrincipal User user, @RequestBody EventBody event){
-        eventService.saveEvent(event, user);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<EventResponse> updateEvent(@PathVariable Long id,@AuthenticationPrincipal User user, @RequestBody EventBody body){
+        eventService.updateEvent(body, user, id);
         EventResponse response = new EventResponse();
-        response.setName(event.getName());
-        response.setEventDescription(event.getEventDescription());;
-        response.setStartTime(event.getStartTime());
-        response.setEndTime(event.getEndTime());
-        response.setAgeLimit(event.getAgeLimit());
-        response.setLocation(event.getLocation());
-        response.setNumberOfTickets(event.getNumberOfTickets());
-        response.setPrice(event.getPrice());
+        response.setName(body.getName());
+        response.setEventDescription(body.getEventDescription());;
+        response.setStartTime(body.getStartTime());
+        response.setEndTime(body.getEndTime());
+        response.setAgeLimit(body.getAgeLimit());
+        response.setLocation(body.getLocation());
+        response.setNumberOfTickets(body.getNumberOfTickets());
+        response.setPrice(body.getPrice());
         return ResponseEntity.ok(response);
     }
 //TODO: Add Update and fix Delete functions

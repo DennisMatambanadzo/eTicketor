@@ -50,7 +50,21 @@ public class EventService{
         return eventRepository.findByUser(user);
     }
 
-    public int updateEvent(Long numberOfTickets,String name, User user) {
-        return eventRepository.updateEvent(numberOfTickets,name,user);
+    public Event updateEvent(EventBody event, User user,Long id) {
+        var opEvent = eventRepository.findByIdAndUser(id,user).get();
+
+        if(Objects.nonNull(event.getName()) && !"".equalsIgnoreCase(event.getName())){
+            opEvent.setName(event.getName());
+        }
+
+        if(Objects.nonNull(event.getLocation()) && !"".equalsIgnoreCase(event.getLocation())){
+            opEvent.setLocation(event.getLocation());
+        }
+
+        if(Objects.nonNull(event.getEventDescription()) && !"".equalsIgnoreCase(event.getEventDescription())){
+            opEvent.setEventDescription(event.getEventDescription());
+        }
+
+        return eventRepository.save(opEvent);
     }
 }
