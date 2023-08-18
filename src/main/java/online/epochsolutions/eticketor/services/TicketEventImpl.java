@@ -32,9 +32,9 @@ public class TicketEventImpl {
             ticket.setSection(Section.STANDARD);
             ticket.setPrice(event.getPrice());
             ticket.setStartTime(event.getStartTime());
-            var nOT = opEvent.get().getNumberOfTickets();
-            event.setNumberOfTickets(nOT--);
+            event.setNumberOfTickets(event.getNumberOfTickets()-1);
             eventRepository.save(event);
+            //TODO: WRITE LOGIC TO CHECK IF THE NUMBER OF TICKETS IS NOT ZERO
             ticketRepository.save(ticket);
             return ticket;
         }else{
