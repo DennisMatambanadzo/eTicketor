@@ -22,6 +22,10 @@ public interface EventRepository extends ListCrudRepository<Event, Long> {
 
     Optional<Event> findByIdAndUser(Long id, User user);
 
+    long deleteByIdAndUser(Long id, User user);
+
+
+
 
 
 }

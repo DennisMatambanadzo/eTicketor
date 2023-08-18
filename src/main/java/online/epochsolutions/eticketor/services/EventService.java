@@ -41,8 +41,15 @@ public class EventService{
         return eventRepository.findById(id);
     }
 
-    public void deleteEvent(Long id) {
-      eventRepository.deleteById(id);
+    public long deleteEvent(Long id) {
+        var event = eventRepository.findById(id );
+        if (event.isPresent()){
+            eventRepository.deleteById(id);
+            return 1;
+        }else {
+            return 0;
+        }
+
 
     }
 

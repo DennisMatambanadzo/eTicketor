@@ -27,8 +27,9 @@ public class UserController {
         try{
             userService.registerUser(registerBody);
             RegisterResponse response = new RegisterResponse();
-            response.setFirstName(registerBody.getFirstName() +", you have been registered");
+            response.setFirstName(registerBody.getFirstName());
             response.setEmail(registerBody.getEmail());
+            response.setMessage(registerBody.getFirstName() +", you have been registered with the email address: " + registerBody.getEmail());
             return ResponseEntity.ok(response);
         }catch (UserAlreadyExistsException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();

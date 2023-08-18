@@ -63,10 +63,14 @@ public class EventController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<DeleteResponse> deleteEvent(@PathVariable Long id){
-        eventService.deleteEvent(id);
         DeleteResponse response = new DeleteResponse();
-        response.setMessage("Event deleted");
+        if (eventService.deleteEvent(id) == 1){
+            response.setMessage("Event deleted");
+        }else {
+            response.setMessage("Delete failed! Event does not exist");
+        }
         return ResponseEntity.ok(response);
+
     }
 
     @PutMapping("/update/{id}")
@@ -83,6 +87,6 @@ public class EventController {
         response.setPrice(body.getPrice());
         return ResponseEntity.ok(response);
     }
-//TODO: Add Update and fix Delete functions
+
 
 }
