@@ -23,7 +23,7 @@ public class TicketEventImpl {
 //    @Cacheable(cacheNames = "tickets", value = "#event.numberOfTickets")
     public Ticket createTicket(String name) {
         Optional<Event> opEvent = eventRepository.findByNameIgnoreCase(name);
-        if (opEvent.isPresent()){
+        CREATE_TICKET: if (opEvent.isPresent()){
             Event event = opEvent.get();
             Ticket ticket = new Ticket();
             ticket.setName(event.getName());
@@ -33,13 +33,18 @@ public class TicketEventImpl {
             ticket.setPrice(event.getPrice());
             ticket.setStartTime(event.getStartTime());
             event.setNumberOfTickets(event.getNumberOfTickets()-1);
-            eventRepository.save(event);
+            if (event.getNumberOfTickets()> -1) {
+                eventRepository.save(event);
+            }else {
+                break CREATE_TICKET;
+
+            }
             //TODO: WRITE LOGIC TO CHECK IF THE NUMBER OF TICKETS IS NOT ZERO
             ticketRepository.save(ticket);
             return ticket;
         }else{
             return new Ticket();
         }
-
+        return new Ticket();
     }
 }
