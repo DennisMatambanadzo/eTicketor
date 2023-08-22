@@ -1,11 +1,14 @@
 package online.epochsolutions.eticketor.services;
 
 import online.epochsolutions.eticketor.api.dtos.EventBody;
+import online.epochsolutions.eticketor.exceptions.UserNotAuthorized;
 import online.epochsolutions.eticketor.models.Event;
+import online.epochsolutions.eticketor.models.user.Role;
 import online.epochsolutions.eticketor.models.user.User;
 import online.epochsolutions.eticketor.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -19,7 +22,9 @@ public class EventService{
         this.eventRepository = eventRepository;
     }
 
-    public void saveEvent(EventBody eventBody,User user){
+    public void saveEvent(EventBody eventBody,User user) throws UserNotAuthorized {
+
+        //TODO: Check user roles
         Event event = new Event();
         event.setUser(user);
         event.setName(eventBody.getName());
@@ -73,5 +78,10 @@ public class EventService{
         }
 
         return eventRepository.save(opEvent);
+    }
+
+    public Collection<Role> checkUserRoles(User user){
+        return user.getRoles();
+
     }
 }
