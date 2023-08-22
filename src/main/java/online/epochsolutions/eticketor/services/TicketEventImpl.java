@@ -21,7 +21,7 @@ public class TicketEventImpl {
     }
 
 //    @Cacheable(cacheNames = "tickets", value = "#event.numberOfTickets")
-    public Ticket createTicket(String name) {
+    public Ticket createTicket(String name,String section) {
         Optional<Event> opEvent = eventRepository.findByNameIgnoreCase(name);
         CREATE_TICKET: if (opEvent.isPresent()){
             Event event = opEvent.get();
@@ -29,7 +29,7 @@ public class TicketEventImpl {
             ticket.setName(event.getName());
             ticket.setEndTime(event.getEndTime());
             ticket.setLocation(event.getLocation());
-            ticket.setSection(Section.STANDARD);
+            ticket.setSection(Section.valueOf(section));
             ticket.setPrice(event.getPrice());
             ticket.setStartTime(event.getStartTime());
             event.setNumberOfTickets(event.getNumberOfTickets()-1);

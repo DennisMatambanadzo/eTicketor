@@ -1,4 +1,4 @@
-package online.epochsolutions.eticketor.models;
+package online.epochsolutions.eticketor.models.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -6,8 +6,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
+import online.epochsolutions.eticketor.models.Event;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -44,5 +46,11 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Event> events = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    private Collection<Role> roles = new ArrayList<>();
 
 }

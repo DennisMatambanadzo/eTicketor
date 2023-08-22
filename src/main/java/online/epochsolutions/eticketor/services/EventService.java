@@ -2,7 +2,7 @@ package online.epochsolutions.eticketor.services;
 
 import online.epochsolutions.eticketor.api.dtos.EventBody;
 import online.epochsolutions.eticketor.models.Event;
-import online.epochsolutions.eticketor.models.User;
+import online.epochsolutions.eticketor.models.user.User;
 import online.epochsolutions.eticketor.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 

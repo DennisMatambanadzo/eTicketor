@@ -1,5 +1,6 @@
 package online.epochsolutions.eticketor.services;
 
+import online.epochsolutions.eticketor.models.Section;
 import online.epochsolutions.eticketor.models.Ticket;
 import online.epochsolutions.eticketor.repositories.TicketRepository;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class TicketService {
     }
 
 //Method to create Tickets
-    public Ticket createTickets(String name){
-        return ticketEvent.createTicket(name);
+    public Ticket createTickets(String name, String section){
+        return ticketEvent.createTicket(name,section);
     }
 }

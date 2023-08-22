@@ -2,7 +2,7 @@ package online.epochsolutions.eticketor.repositories;
 
 
 import online.epochsolutions.eticketor.models.Event;
-import online.epochsolutions.eticketor.models.User;
+import online.epochsolutions.eticketor.models.user.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;

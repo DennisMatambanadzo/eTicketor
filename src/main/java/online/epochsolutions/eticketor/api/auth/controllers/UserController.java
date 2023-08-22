@@ -7,7 +7,7 @@ import online.epochsolutions.eticketor.api.dtos.LoginResponse;
 import online.epochsolutions.eticketor.api.dtos.RegisterBody;
 import online.epochsolutions.eticketor.api.dtos.RegisterResponse;
 import online.epochsolutions.eticketor.exceptions.UserAlreadyExistsException;
-import online.epochsolutions.eticketor.models.User;
+import online.epochsolutions.eticketor.models.user.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

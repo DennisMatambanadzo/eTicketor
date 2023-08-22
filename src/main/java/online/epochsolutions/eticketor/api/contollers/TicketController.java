@@ -19,8 +19,8 @@ public class TicketController {
     }
 
     @PostMapping("/buyTicket")
-    public ResponseEntity<TicketResponse> createTicket(@RequestParam String name){
-        var ticket = ticketService.createTickets(name);
+    public ResponseEntity<TicketResponse> createTicket(@RequestParam String name, @RequestParam String section){
+        var ticket = ticketService.createTickets(name,section);
         TicketResponse response = new TicketResponse();
         response.setName(ticket.getName());
         response.setStartTime(ticket.getStartTime());

@@ -3,7 +3,7 @@ package online.epochsolutions.eticketor.api.auth.services;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import jakarta.annotation.PostConstruct;
-import online.epochsolutions.eticketor.models.User;
+import online.epochsolutions.eticketor.models.user.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

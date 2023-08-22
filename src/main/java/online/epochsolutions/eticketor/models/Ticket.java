@@ -32,8 +32,8 @@ public class Ticket {
     @Column(name = "location", nullable = false)
     private String location;
 
-    @Column(name = "section", nullable = false)
-    private Section section;
+
+
 
 //    @Lob
 //    @GeneratedValue(strategy = GenerationType.UUID)
@@ -42,6 +42,12 @@ public class Ticket {
 
     @Column(name = "price", nullable = false)
     private Double price;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "section", nullable = false)
+    private Section section;
+
+
 
 }
 

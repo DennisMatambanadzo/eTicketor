@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import online.epochsolutions.eticketor.api.auth.repositories.UserRepository;
 import online.epochsolutions.eticketor.api.auth.services.JWTService;
-import online.epochsolutions.eticketor.models.User;
+import online.epochsolutions.eticketor.models.user.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;

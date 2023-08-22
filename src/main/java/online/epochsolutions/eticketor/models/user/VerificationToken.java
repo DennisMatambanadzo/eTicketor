@@ -1,4 +1,4 @@
-package online.epochsolutions.eticketor.models;
+package online.epochsolutions.eticketor.models.user;
 
 import jakarta.persistence.*;
 import lombok.Getter;

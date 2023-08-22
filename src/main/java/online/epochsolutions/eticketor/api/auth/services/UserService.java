@@ -1,16 +1,19 @@
 package online.epochsolutions.eticketor.api.auth.services;
 
+import online.epochsolutions.eticketor.api.auth.repositories.PrivilegeRepository;
+import online.epochsolutions.eticketor.api.auth.repositories.RoleRepository;
 import online.epochsolutions.eticketor.api.auth.repositories.UserRepository;
 import online.epochsolutions.eticketor.api.auth.repositories.VerificationTokenRepository;
 import online.epochsolutions.eticketor.api.dtos.LoginBody;
 import online.epochsolutions.eticketor.api.dtos.RegisterBody;
 import online.epochsolutions.eticketor.exceptions.UserAlreadyExistsException;
-import online.epochsolutions.eticketor.exceptions.UserNotVerifiedException;
-import online.epochsolutions.eticketor.models.User;
-import online.epochsolutions.eticketor.models.VerificationToken;
+import online.epochsolutions.eticketor.models.user.Role;
+import online.epochsolutions.eticketor.models.user.User;
+import online.epochsolutions.eticketor.models.user.VerificationToken;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,12 +23,16 @@ public class UserService {
     private final EncryptionService encryptionService;
     private final JWTService jwtService;
     private final VerificationTokenRepository verificationTokenRepository;
+    private final RoleRepository roleRepository;
+    private final PrivilegeRepository privilegeRepository;
 
-    public UserService(UserRepository userRepository, EncryptionService encryptionService, JWTService jwtService, VerificationTokenRepository verificationTokenRepository) {
+    public UserService(UserRepository userRepository, EncryptionService encryptionService, JWTService jwtService, VerificationTokenRepository verificationTokenRepository, RoleRepository roleRepository, PrivilegeRepository privilegeRepository) {
         this.userRepository = userRepository;
         this.encryptionService = encryptionService;
         this.jwtService = jwtService;
         this.verificationTokenRepository = verificationTokenRepository;
+        this.roleRepository = roleRepository;
+        this.privilegeRepository = privilegeRepository;
     }
 
     private VerificationToken createVerificationToken(User user){
@@ -41,11 +48,13 @@ public class UserService {
        if (userRepository.findByEmailIgnoreCase(registerBody.getEmail()).isPresent()){
            throw new UserAlreadyExistsException();
        }
+
         User user = new User();
         user.setEmail(registerBody.getEmail());
         user.setFirstName(registerBody.getFirstName());
         user.setLastName(registerBody.getLastName());
         user.setPassword(encryptionService.encryptPassword(registerBody.getPassword()));
+        user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
         userRepository.save(user);
 
     }
