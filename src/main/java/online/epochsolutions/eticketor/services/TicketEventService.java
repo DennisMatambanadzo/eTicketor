@@ -5,17 +5,16 @@ import online.epochsolutions.eticketor.models.Section;
 import online.epochsolutions.eticketor.models.Ticket;
 import online.epochsolutions.eticketor.repositories.EventRepository;
 import online.epochsolutions.eticketor.repositories.TicketRepository;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 @Service
-public class TicketEventImpl {
+public class TicketEventService {
 
     private final TicketRepository ticketRepository;
     private final EventRepository eventRepository;
 
-    public TicketEventImpl(TicketRepository ticketRepository, EventRepository eventRepository) {
+    public TicketEventService(TicketRepository ticketRepository, EventRepository eventRepository) {
         this.ticketRepository = ticketRepository;
         this.eventRepository = eventRepository;
     }

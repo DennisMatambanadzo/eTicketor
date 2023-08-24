@@ -24,7 +24,10 @@ public class EventService{
 
     public void saveEvent(EventBody eventBody,User user) throws UserNotAuthorized {
 
+
         //TODO: Check user roles
+        var roles = user.getRoles();
+        
         Event event = new Event();
         event.setUser(user);
         event.setName(eventBody.getName());
