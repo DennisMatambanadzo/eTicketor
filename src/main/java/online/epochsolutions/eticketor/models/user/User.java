@@ -47,6 +47,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Event> events = new ArrayList<>();
 
+
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "user_roles",
@@ -54,4 +56,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private Collection<Role> roles = new ArrayList<>();
 
+    @Column(name = "email_verified", nullable = false)
+    private Boolean emailVerified = false;
+
+
+    public Boolean isEmailVerified() {
+        return emailVerified;
+    }
 }

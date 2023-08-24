@@ -20,7 +20,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.addFilterBefore(jwtRequestFilter, AuthorizationFilter.class);
-        http.authorizeHttpRequests(authorize ->authorize.requestMatchers("/auth/register","/auth/login","/auth/me").permitAll()
+        http.authorizeHttpRequests(authorize ->authorize.requestMatchers("/auth/register","/auth/login","/auth/me", "/auth/verify").permitAll()
                 .anyRequest().authenticated());
         return http.build();
     }

@@ -54,8 +54,6 @@ public class EventService{
         }else {
             return 0;
         }
-
-
     }
 
     public List<Event> getEventsByUser(User user) {
