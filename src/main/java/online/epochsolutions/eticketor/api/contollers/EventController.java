@@ -8,6 +8,7 @@ import online.epochsolutions.eticketor.models.user.User;
 import online.epochsolutions.eticketor.services.EventService;
 import online.epochsolutions.eticketor.services.TicketService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class EventController {
         this.eventService = eventService;
         this.ticketService = ticketService;
     }
-
+//    @PreAuthorize("hasRole('ROLE_HOST')")
     @PostMapping("/save")
     public ResponseEntity<EventResponse> createEvent(@RequestBody EventBody body, @AuthenticationPrincipal User user){
         eventService.saveEvent(body, user);
