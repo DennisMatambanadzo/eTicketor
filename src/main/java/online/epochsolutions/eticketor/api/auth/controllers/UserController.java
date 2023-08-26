@@ -80,4 +80,9 @@ public class UserController {
         return user;
     }
 
+
+    @GetMapping("/roleHierarchy")
+    public ResponseEntity role(){
+        return ResponseEntity.ok().build();
+    }
 }
