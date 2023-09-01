@@ -10,7 +10,12 @@ public enum Permission {
     ADMIN_READ("admin:read"),
     ADMIN_UPDATE("admin:update"),
     ADMIN_CREATE("admin:create"),
-    ADMIN_DELETE("admin:delete")
+    ADMIN_DELETE("admin:delete"),
+
+    HOST_READ("host:read"),
+    HOST_UPDATE("host:update"),
+    HOST_CREATE("host:create"),
+    HOST_DELETE("host:delete"),
 //    ,
 //
 //
@@ -18,6 +23,7 @@ public enum Permission {
 //    MANAGER_UPDATE("manager:update"),
 //    MANAGER_CREATE("manager:create"),
 //    MANAGER_DELETE("manager:delete")
+
 ;
 
     @Getter

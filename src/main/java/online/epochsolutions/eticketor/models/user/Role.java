@@ -19,23 +19,23 @@ public enum Role {
                     ADMIN_READ,
                     ADMIN_CREATE,
                     ADMIN_UPDATE,
-                    ADMIN_DELETE
-//                    ,
-//                    MANAGER_READ,
-//                    MANAGER_CREATE,
-//                    MANAGER_UPDATE,
-//                    MANAGER_DELETE
+                    ADMIN_DELETE,
+
+                    HOST_READ,
+                    HOST_CREATE,
+                    HOST_UPDATE,
+                    HOST_DELETE
             )
     )
-//    ,
-//    MANAGER(
-//            Set.of(
-//                    MANAGER_READ,
-//                    MANAGER_CREATE,
-//                    MANAGER_UPDATE,
-//                    MANAGER_DELETE
-//            )
-//    )
+    ,HOST(
+            Set.of(
+                    HOST_READ,
+                    HOST_CREATE,
+                    HOST_UPDATE,
+                    HOST_DELETE
+            )
+    )
+
     ;
 
     @Getter

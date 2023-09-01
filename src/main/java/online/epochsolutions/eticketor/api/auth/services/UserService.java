@@ -48,16 +48,29 @@ public class UserService {
 
     public void registerUser(RegisterBody registerBody) throws UserAlreadyExistsException, EmailFailureException {
 
-       if (userRepository.findByEmailIgnoreCase(registerBody.getEmail()).isPresent()){
-           throw new UserAlreadyExistsException();
-       }
-
+        checkUser(registerBody);
         User user = new User();
         user.setEmail(registerBody.getEmail());
         user.setFirstName(registerBody.getFirstName());
         user.setLastName(registerBody.getLastName());
         user.setPassword(encryptionService.encryptPassword(registerBody.getPassword()));
-        user.setRole(Role.ADMIN);
+        user.setRole(Role.USER);
+        VerificationToken verificationToken = createVerificationToken(user);
+        emailService.sendVerificationEmail(verificationToken);
+        userRepository.save(user);
+
+    }
+
+    public void registerHost(RegisterBody registerBody) throws UserAlreadyExistsException, EmailFailureException {
+
+
+        checkUser(registerBody);
+        User user = new User();
+        user.setEmail(registerBody.getEmail());
+        user.setFirstName(registerBody.getFirstName());
+        user.setLastName(registerBody.getLastName());
+        user.setPassword(encryptionService.encryptPassword(registerBody.getPassword()));
+        user.setRole(Role.HOST);
         VerificationToken verificationToken = createVerificationToken(user);
         emailService.sendVerificationEmail(verificationToken);
         userRepository.save(user);
@@ -102,5 +115,11 @@ public class UserService {
             }
         }
         return false;
+    }
+
+    private void checkUser(RegisterBody registerBody) throws UserAlreadyExistsException {
+        if (userRepository.findByEmailIgnoreCase(registerBody.getEmail()).isPresent()){
+            throw new UserAlreadyExistsException();
+        }
     }
 }

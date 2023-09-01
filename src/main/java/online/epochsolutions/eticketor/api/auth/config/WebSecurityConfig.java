@@ -9,9 +9,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
-import static online.epochsolutions.eticketor.models.user.Permission.ADMIN_READ;
-import static online.epochsolutions.eticketor.models.user.Role.ADMIN;
-import static org.springframework.http.HttpMethod.GET;
+import static online.epochsolutions.eticketor.models.user.Permission.*;
+import static online.epochsolutions.eticketor.models.user.Role.*;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 public class WebSecurityConfig {
@@ -28,10 +28,22 @@ public class WebSecurityConfig {
         http.addFilterBefore(jwtRequestFilter, AuthorizationFilter.class);
         http.authorizeHttpRequests(authorize ->authorize.requestMatchers("/auth/**").permitAll());
 
-        http.authorizeHttpRequests(authorize ->authorize
-                .requestMatchers("management/**").hasRole(ADMIN.name())
-                .requestMatchers(GET, "management/**").hasAuthority(ADMIN_READ.name()).anyRequest().authenticated());
 
+        http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("eTicketor/event/**").hasAnyRole(HOST.name(), ADMIN.name())
+                .requestMatchers(GET,"eTicketor/event/**").hasAnyAuthority(ADMIN_READ.name(), HOST_READ.name())
+                .requestMatchers(POST,"eTicketor/event/**").hasAuthority( HOST_CREATE.name())
+                .requestMatchers(PUT,"eTicketor/event/**").hasAuthority( HOST_UPDATE.name())
+                .requestMatchers(DELETE,"eTicketor/event/**").hasAnyAuthority(ADMIN_DELETE.name(), HOST_DELETE.name()));
+
+        http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("eTicketor/ticket/**").hasRole(USER.name())
+                .requestMatchers(POST,"eTicketor/ticket/**").hasAuthority(ADMIN_CREATE.name()));
+
+
+        http.authorizeHttpRequests(authorize ->authorize
+                .requestMatchers("admin/**").hasRole(ADMIN.name())
+                .requestMatchers(GET, "admin/**").hasAuthority(ADMIN_READ.name()).anyRequest().authenticated());
 
 //        http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET,"/auth/roleHierarchy").hasRole("USER"));
         return http.build();
