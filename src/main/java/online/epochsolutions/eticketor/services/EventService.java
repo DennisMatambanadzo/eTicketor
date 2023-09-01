@@ -26,7 +26,7 @@ public class EventService{
 
 
         //TODO: Check user roles
-        var roles = user.getRoles();
+
         
         Event event = new Event();
         event.setUser(user);
@@ -81,8 +81,5 @@ public class EventService{
         return eventRepository.save(opEvent);
     }
 
-    public Collection<Role> checkUserRoles(User user){
-        return user.getRoles();
 
-    }
 }

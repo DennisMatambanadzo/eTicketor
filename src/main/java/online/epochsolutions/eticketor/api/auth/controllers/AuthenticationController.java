@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-public class UserController {
+public class AuthenticationController {
     private UserService userService;
 
-    public UserController(UserService userService) {
+    public AuthenticationController(UserService userService) {
         this.userService = userService;
     }
 
