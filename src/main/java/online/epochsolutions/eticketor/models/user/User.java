@@ -64,7 +64,7 @@ public class User implements UserDetails {
         return emailVerified;
     }
 
-    @JsonIgnore
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();

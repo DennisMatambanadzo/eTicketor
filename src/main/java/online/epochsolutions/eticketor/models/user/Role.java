@@ -13,7 +13,9 @@ import static online.epochsolutions.eticketor.models.user.Permission.*;
 
 @RequiredArgsConstructor
 public enum Role {
-  USER(Collections.emptySet()),
+  USER(Set.of(
+          USER_CREATE
+  )),
     ADMIN(
             Set.of(
                     ADMIN_READ,

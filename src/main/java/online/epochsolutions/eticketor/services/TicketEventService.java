@@ -31,8 +31,8 @@ public class TicketEventService {
             ticket.setSection(Section.valueOf(section));
             ticket.setPrice(event.getPrice());
             ticket.setStartTime(event.getStartTime());
-            event.setNumberOfTickets(event.getNumberOfTickets()-1);
-            if (event.getNumberOfTickets()> -1) {
+            event.setRemainingTickets(event.getRemainingTickets()-1);
+            if (event.getRemainingTickets()> -1) {
                 eventRepository.save(event);
             }else {
                 break CREATE_TICKET;

@@ -38,7 +38,7 @@ public class WebSecurityConfig {
 
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("eTicketor/ticket/**").hasRole(USER.name())
-                .requestMatchers(POST,"eTicketor/ticket/**").hasAuthority(ADMIN_CREATE.name()));
+                .requestMatchers(POST,"eTicketor/ticket/**").hasAuthority(USER_CREATE.name()));
 
 
         http.authorizeHttpRequests(authorize ->authorize
