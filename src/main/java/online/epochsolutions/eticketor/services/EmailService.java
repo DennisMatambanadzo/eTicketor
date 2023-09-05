@@ -1,6 +1,7 @@
 package online.epochsolutions.eticketor.services;
 
 import online.epochsolutions.eticketor.exceptions.EmailFailureException;
+import online.epochsolutions.eticketor.models.TicketToken;
 import online.epochsolutions.eticketor.models.user.VerificationToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
@@ -35,6 +36,18 @@ public class EmailService {
         message.setSubject("Verify your mail to activate your account,");
         message.setText("Please follow the link below to verify your email to activate your account.\n" +
                 url + "/auth/verify?token=" + verificationToken.getToken());
+        try{
+            javaMailSender.send(message);
+        }catch(MailException exception){
+            throw new EmailFailureException();
+        }
+    }
+
+    public void sendTicketPurchaseEmail(TicketToken token) throws EmailFailureException{
+        SimpleMailMessage message = makeMailMessage();
+        message.setTo(token.getUser().getEmail());
+        message.setSubject("Your ticket purchase was successful,");
+        message.setText("Ticket details.....");
         try{
             javaMailSender.send(message);
         }catch(MailException exception){

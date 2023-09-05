@@ -1,5 +1,8 @@
 package online.epochsolutions.eticketor.services;
 
+import lombok.RequiredArgsConstructor;
+import online.epochsolutions.eticketor.api.auth.services.JWTService;
+import online.epochsolutions.eticketor.exceptions.EmailFailureException;
 import online.epochsolutions.eticketor.models.Ticket;
 import online.epochsolutions.eticketor.models.user.User;
 import online.epochsolutions.eticketor.repositories.TicketRepository;
@@ -8,17 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TicketService {
-    private TicketRepository ticketRepository;
-    private TicketEventService ticketEvent;
+    private final TicketRepository ticketRepository;
+    private final TicketEventService ticketEvent;
 
-    public TicketService(TicketRepository ticketRepository, TicketEventService ticketEvent) {
-        this.ticketRepository = ticketRepository;
-        this.ticketEvent = ticketEvent;
-    }
 
 //Method to create Tickets
-    public Ticket createTickets(String name, String section, User user,String host){
+    public Ticket createTickets(String name, String section, User user,String host) throws EmailFailureException {
         return ticketEvent.createTicket(name,section,user,host);
     }
 

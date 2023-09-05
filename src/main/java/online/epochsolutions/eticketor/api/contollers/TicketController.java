@@ -1,6 +1,7 @@
 package online.epochsolutions.eticketor.api.contollers;
 
 import online.epochsolutions.eticketor.api.dtos.TicketResponse;
+import online.epochsolutions.eticketor.exceptions.EmailFailureException;
 import online.epochsolutions.eticketor.models.Ticket;
 import online.epochsolutions.eticketor.models.user.User;
 import online.epochsolutions.eticketor.services.TicketService;
@@ -22,7 +23,7 @@ public class TicketController {
     }
 
     @PostMapping("/buyTicket")
-    public ResponseEntity<TicketResponse> createTicket(@RequestParam String name, @RequestParam String section,@RequestParam String host,@AuthenticationPrincipal User user){
+    public ResponseEntity<TicketResponse> createTicket(@RequestParam String name, @RequestParam String section,@RequestParam String host,@AuthenticationPrincipal User user) throws EmailFailureException {
         var ticket = ticketService.createTickets(name,section,user,host);
         TicketResponse response = new TicketResponse();
         response.setName(ticket.getName());
