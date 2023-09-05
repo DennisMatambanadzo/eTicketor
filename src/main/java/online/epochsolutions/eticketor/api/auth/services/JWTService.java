@@ -21,6 +21,7 @@ public class JWTService {
 
     private Algorithm algorithm;
     public static final String EMAIL_KEY = "EMAIL";
+    public static final String ROLE_KEY = "ROLES";
 
     @PostConstruct
     public void postConstruct(){
@@ -30,6 +31,7 @@ public class JWTService {
     public String generateJWT(User user){
         return JWT.create()
                 .withClaim(EMAIL_KEY,user.getEmail())
+                .withClaim(ROLE_KEY, user.getRole().ordinal())
                 .withExpiresAt(new Date(System.currentTimeMillis()+(1000 + expiryInSeconds)))
                 .withIssuer(issuer)
                 .sign(algorithm);

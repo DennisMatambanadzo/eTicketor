@@ -5,17 +5,16 @@ import online.epochsolutions.eticketor.models.Section;
 import online.epochsolutions.eticketor.models.Ticket;
 import online.epochsolutions.eticketor.repositories.EventRepository;
 import online.epochsolutions.eticketor.repositories.TicketRepository;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 @Service
-public class TicketEventImpl {
+public class TicketEventService {
 
     private final TicketRepository ticketRepository;
     private final EventRepository eventRepository;
 
-    public TicketEventImpl(TicketRepository ticketRepository, EventRepository eventRepository) {
+    public TicketEventService(TicketRepository ticketRepository, EventRepository eventRepository) {
         this.ticketRepository = ticketRepository;
         this.eventRepository = eventRepository;
     }
@@ -32,8 +31,8 @@ public class TicketEventImpl {
             ticket.setSection(Section.valueOf(section));
             ticket.setPrice(event.getPrice());
             ticket.setStartTime(event.getStartTime());
-            event.setNumberOfTickets(event.getNumberOfTickets()-1);
-            if (event.getNumberOfTickets()> -1) {
+            event.setRemainingTickets(event.getRemainingTickets()-1);
+            if (event.getRemainingTickets()> -1) {
                 eventRepository.save(event);
             }else {
                 break CREATE_TICKET;

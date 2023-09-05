@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-public class UserController {
+public class AuthenticationController {
     private UserService userService;
 
-    public UserController(UserService userService) {
+    public AuthenticationController(UserService userService) {
         this.userService = userService;
     }
 
@@ -75,9 +75,28 @@ public class UserController {
         }
     }
 
+    @PostMapping("/hostRegister")
+    public ResponseEntity<RegisterResponse> RegisterHost(@RequestBody @Valid RegisterBody registerBody) throws EmailFailureException, UserAlreadyExistsException {
+        try{
+            userService.registerHost(registerBody);
+            RegisterResponse response = new RegisterResponse();
+            response.setFirstName(registerBody.getFirstName());
+            response.setEmail(registerBody.getEmail());
+            response.setMessage(registerBody.getFirstName() +", you have been registered with the email address: " + registerBody.getEmail());
+            return ResponseEntity.ok(response);
+        }catch (UserAlreadyExistsException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+    }
+
     @GetMapping("/me")
     public User getLoggedInUserProfile(@AuthenticationPrincipal User user){
         return user;
     }
 
+
+    @GetMapping("/roleHierarchy")
+    public ResponseEntity role(){
+        return ResponseEntity.ok().build();
+    }
 }
