@@ -14,6 +14,9 @@ import java.util.Optional;
 public interface EventRepository extends ListCrudRepository<Event, Long> {
     Optional<Event> findByNameIgnoreCase(String name);
 
+    Optional<Event> findByUserAndNameIgnoreCase(User user, String name);
+
+
     @Transactional
     @Modifying
     @Query("update Event e set e.remainingTickets = ?1, e.name = ?2 where e.user = ?3")

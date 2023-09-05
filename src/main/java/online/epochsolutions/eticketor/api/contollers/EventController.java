@@ -26,7 +26,7 @@ public class EventController {
         this.eventService = eventService;
         this.ticketService = ticketService;
     }
-//    @PreAuthorize("hasRole('ROLE_HOST')")
+
     @PostMapping("/save")
     public ResponseEntity<EventResponse> createEvent(@RequestBody EventBody body, @AuthenticationPrincipal User user){
         eventService.saveEvent(body, user);

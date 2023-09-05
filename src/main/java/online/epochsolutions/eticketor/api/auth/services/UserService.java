@@ -76,6 +76,21 @@ public class UserService {
         userRepository.save(user);
 
     }
+    public void registerAdmin(RegisterBody registerBody) throws UserAlreadyExistsException, EmailFailureException {
+
+
+        checkUser(registerBody);
+        User user = new User();
+        user.setEmail(registerBody.getEmail());
+        user.setFirstName(registerBody.getFirstName());
+        user.setLastName(registerBody.getLastName());
+        user.setPassword(encryptionService.encryptPassword(registerBody.getPassword()));
+        user.setRole(Role.ADMIN);
+        VerificationToken verificationToken = createVerificationToken(user);
+        emailService.sendVerificationEmail(verificationToken);
+        userRepository.save(user);
+
+    }
 
     public String loginUser(LoginBody loginBody) throws EmailFailureException, UserNotVerifiedException {
         Optional<User> opUser = userRepository.findByEmailIgnoreCase(loginBody.getEmail());
@@ -122,4 +137,18 @@ public class UserService {
             throw new UserAlreadyExistsException();
         }
     }
+
+    public List<User> getUsers() {
+        return userRepository.findByRole(Role.USER);
+    }
+
+    public List<User> getHosts() {
+        return userRepository.findByRole(Role.HOST);
+    }
+
+    public List<User> getAdmins() {
+        return userRepository.findByRole(Role.ADMIN);
+    }
+
+
 }

@@ -33,15 +33,18 @@ public class WebSecurityConfig {
 
 
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("eTicketor/event/**").hasAnyRole(HOST.name(), ADMIN.name())
-                .requestMatchers(GET,"eTicketor/event/**").hasAnyAuthority(ADMIN_READ.name(), HOST_READ.name())
-                .requestMatchers(POST,"eTicketor/event/**").hasAuthority( HOST_CREATE.name())
-                .requestMatchers(PUT,"eTicketor/event/**").hasAuthority( HOST_UPDATE.name())
-                .requestMatchers(DELETE,"eTicketor/event/**").hasAnyAuthority(ADMIN_DELETE.name(), HOST_DELETE.name()));
+                .requestMatchers("eTicketor/event/**").hasAnyRole(HOST.name(), ADMIN.name(), USER.name())
+                .requestMatchers(GET,"eTicketor/event/events/user").hasAuthority( HOST_READ.name())
+                .requestMatchers(GET,"eTicketor/event/getList").hasAnyAuthority( HOST_READ.name(), USER_READ.name(), ADMIN.name())
+                .requestMatchers(GET,"eTicketor/event/getEvent/{id}").hasAnyAuthority( HOST_READ.name(),ADMIN_READ.name())
+                .requestMatchers(POST,"eTicketor/event/save").hasAuthority(HOST_CREATE.name())
+                .requestMatchers(PUT,"eTicketor/event/update/{id}").hasAuthority( HOST_UPDATE.name())
+                .requestMatchers(DELETE,"eTicketor/event/delete/{id}").hasAnyAuthority(ADMIN_DELETE.name(), HOST_DELETE.name()));
 
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("eTicketor/ticket/**").hasRole(USER.name())
-                .requestMatchers(POST,"eTicketor/ticket/**").hasAuthority(ADMIN_CREATE.name()));
+                .requestMatchers("eTicketor/ticket/**").hasAnyRole(USER.name(),ADMIN.name(), HOST.name())
+                .requestMatchers(POST,"eTicketor/ticket/buyTicket").hasAuthority(USER_CREATE.name())
+                .requestMatchers(GET,"eTicketor/ticket/ticketList").hasAuthority(USER_READ.name()));
 
 
         http.authorizeHttpRequests(authorize ->authorize

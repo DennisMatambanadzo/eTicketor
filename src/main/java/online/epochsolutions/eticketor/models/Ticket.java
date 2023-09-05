@@ -3,6 +3,7 @@ package online.epochsolutions.eticketor.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import online.epochsolutions.eticketor.models.user.User;
 
 import java.time.Instant;
 
@@ -47,7 +48,9 @@ public class Ticket {
     @Column(name = "section", nullable = false)
     private Section section;
 
-
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 }
 

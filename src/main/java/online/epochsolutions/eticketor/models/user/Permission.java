@@ -17,15 +17,9 @@ public enum Permission {
     HOST_CREATE("host:create"),
     HOST_DELETE("host:delete"),
     
-//    ,
-//
-//
-//    MANAGER_READ("manager:read"),
-//    MANAGER_UPDATE("manager:update"),
-//    MANAGER_CREATE("manager:create"),
-//    MANAGER_DELETE("manager:delete")
 
-    USER_CREATE("user:create");
+    USER_CREATE("user:create"),
+    USER_READ("user:read");
 
     @Getter
     private final String permission;
