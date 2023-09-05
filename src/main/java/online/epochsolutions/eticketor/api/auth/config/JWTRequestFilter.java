@@ -10,6 +10,7 @@ import online.epochsolutions.eticketor.api.auth.services.JWTService;
 import online.epochsolutions.eticketor.models.user.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,11 +23,13 @@ import java.util.Optional;
 public class JWTRequestFilter extends OncePerRequestFilter {
 
     private JWTService jwtService;
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final UserDetailsService userDetailsService;
 
-    public JWTRequestFilter(JWTService jwtService, UserRepository userRepository) {
+    public JWTRequestFilter(JWTService jwtService, UserRepository userRepository, UserDetailsService userDetailsService) {
         this.jwtService = jwtService;
         this.userRepository = userRepository;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 Optional<User> opUser = userRepository.findByEmailIgnoreCase(email);
                 if (opUser.isPresent()){
                     User user = opUser.get();
-                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user,null,new ArrayList<>());
+                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
                     auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(auth);
                 }

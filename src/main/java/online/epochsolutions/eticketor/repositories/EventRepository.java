@@ -16,8 +16,9 @@ public interface EventRepository extends ListCrudRepository<Event, Long> {
 
     @Transactional
     @Modifying
-    @Query("update Event e set e.numberOfTickets = ?1, e.name = ?2 where e.user = ?3")
+    @Query("update Event e set e.remainingTickets = ?1, e.name = ?2 where e.user = ?3")
     int updateEvent(Long numberOfTickets, String name, User user);
+
     List<Event> findByUser(User user);
 
     Optional<Event> findByIdAndUser(Long id, User user);

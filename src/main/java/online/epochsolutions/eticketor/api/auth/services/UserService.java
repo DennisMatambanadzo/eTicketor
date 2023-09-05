@@ -1,7 +1,5 @@
 package online.epochsolutions.eticketor.api.auth.services;
 
-import online.epochsolutions.eticketor.api.auth.repositories.PrivilegeRepository;
-import online.epochsolutions.eticketor.api.auth.repositories.RoleRepository;
 import online.epochsolutions.eticketor.api.auth.repositories.UserRepository;
 import online.epochsolutions.eticketor.api.auth.repositories.VerificationTokenRepository;
 import online.epochsolutions.eticketor.api.dtos.LoginBody;
@@ -9,6 +7,7 @@ import online.epochsolutions.eticketor.api.dtos.RegisterBody;
 import online.epochsolutions.eticketor.exceptions.EmailFailureException;
 import online.epochsolutions.eticketor.exceptions.UserAlreadyExistsException;
 import online.epochsolutions.eticketor.exceptions.UserNotVerifiedException;
+import online.epochsolutions.eticketor.models.user.Role;
 import online.epochsolutions.eticketor.models.user.User;
 import online.epochsolutions.eticketor.models.user.VerificationToken;
 import online.epochsolutions.eticketor.services.EmailService;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,17 +24,15 @@ public class UserService {
     private final EncryptionService encryptionService;
     private final JWTService jwtService;
     private final VerificationTokenRepository verificationTokenRepository;
-    private final RoleRepository roleRepository;
-    private final PrivilegeRepository privilegeRepository;
+
     private final EmailService emailService;
 
-    public UserService(UserRepository userRepository, EncryptionService encryptionService, JWTService jwtService, VerificationTokenRepository verificationTokenRepository, RoleRepository roleRepository, PrivilegeRepository privilegeRepository, EmailService emailService) {
+    public UserService(UserRepository userRepository, EncryptionService encryptionService, JWTService jwtService, VerificationTokenRepository verificationTokenRepository, EmailService emailService) {
         this.userRepository = userRepository;
         this.encryptionService = encryptionService;
         this.jwtService = jwtService;
         this.verificationTokenRepository = verificationTokenRepository;
-        this.roleRepository = roleRepository;
-        this.privilegeRepository = privilegeRepository;
+
         this.emailService = emailService;
     }
 
@@ -52,16 +48,29 @@ public class UserService {
 
     public void registerUser(RegisterBody registerBody) throws UserAlreadyExistsException, EmailFailureException {
 
-       if (userRepository.findByEmailIgnoreCase(registerBody.getEmail()).isPresent()){
-           throw new UserAlreadyExistsException();
-       }
-
+        checkUser(registerBody);
         User user = new User();
         user.setEmail(registerBody.getEmail());
         user.setFirstName(registerBody.getFirstName());
         user.setLastName(registerBody.getLastName());
         user.setPassword(encryptionService.encryptPassword(registerBody.getPassword()));
-        user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+        user.setRole(Role.USER);
+        VerificationToken verificationToken = createVerificationToken(user);
+        emailService.sendVerificationEmail(verificationToken);
+        userRepository.save(user);
+
+    }
+
+    public void registerHost(RegisterBody registerBody) throws UserAlreadyExistsException, EmailFailureException {
+
+
+        checkUser(registerBody);
+        User user = new User();
+        user.setEmail(registerBody.getEmail());
+        user.setFirstName(registerBody.getFirstName());
+        user.setLastName(registerBody.getLastName());
+        user.setPassword(encryptionService.encryptPassword(registerBody.getPassword()));
+        user.setRole(Role.HOST);
         VerificationToken verificationToken = createVerificationToken(user);
         emailService.sendVerificationEmail(verificationToken);
         userRepository.save(user);
@@ -106,5 +115,11 @@ public class UserService {
             }
         }
         return false;
+    }
+
+    private void checkUser(RegisterBody registerBody) throws UserAlreadyExistsException {
+        if (userRepository.findByEmailIgnoreCase(registerBody.getEmail()).isPresent()){
+            throw new UserAlreadyExistsException();
+        }
     }
 }

@@ -24,7 +24,10 @@ public class EventService{
 
     public void saveEvent(EventBody eventBody,User user) throws UserNotAuthorized {
 
+
         //TODO: Check user roles
+
+        
         Event event = new Event();
         event.setUser(user);
         event.setName(eventBody.getName());
@@ -33,7 +36,8 @@ public class EventService{
         event.setEndTime(eventBody.getEndTime());
         event.setStartTime(eventBody.getStartTime());
         event.setPrice(eventBody.getPrice());
-        event.setNumberOfTickets(eventBody.getNumberOfTickets());
+        event.setSlots(eventBody.getNumberOfTickets());
+        event.setRemainingTickets(eventBody.getNumberOfTickets());
         event.setAgeLimit(eventBody.getAgeLimit());
         eventRepository.save(event);
     }
@@ -78,8 +82,5 @@ public class EventService{
         return eventRepository.save(opEvent);
     }
 
-    public Collection<Role> checkUserRoles(User user){
-        return user.getRoles();
 
-    }
 }

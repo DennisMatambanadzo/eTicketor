@@ -1,32 +1,55 @@
 package online.epochsolutions.eticketor.models.user;
 
-import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@Getter
-@Setter
-@Entity
-@Table(name = "role")
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+import static online.epochsolutions.eticketor.models.user.Permission.*;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+@RequiredArgsConstructor
+public enum Role {
+  USER(Set.of(
+          USER_CREATE
+  )),
+    ADMIN(
+            Set.of(
+                    ADMIN_READ,
+                    ADMIN_CREATE,
+                    ADMIN_UPDATE,
+                    ADMIN_DELETE,
 
-    @ManyToMany(mappedBy = "roles")
-    private Collection<User> users = new ArrayList<>();
+                    HOST_READ,
+                    HOST_CREATE,
+                    HOST_UPDATE,
+                    HOST_DELETE
+            )
+    )
+    ,HOST(
+            Set.of(
+                    HOST_READ,
+                    HOST_CREATE,
+                    HOST_UPDATE,
+                    HOST_DELETE
+            )
+    )
 
-    @ManyToMany
-    @JoinTable(name = "role_privileges",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "privileges_id"))
-    private Collection<Privilege> privileges = new ArrayList<>();
+    ;
+
+    @Getter
+    private final Set<Permission> permissions;
+
+    public List<SimpleGrantedAuthority> getAuthorities(){
+        var authorities = getPermissions()
+                .stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.name()))
+                .collect(Collectors.toList());
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+        return authorities;
+    }
 
 }

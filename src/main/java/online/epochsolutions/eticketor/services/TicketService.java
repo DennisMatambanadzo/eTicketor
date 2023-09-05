@@ -1,6 +1,5 @@
 package online.epochsolutions.eticketor.services;
 
-import online.epochsolutions.eticketor.models.Section;
 import online.epochsolutions.eticketor.models.Ticket;
 import online.epochsolutions.eticketor.repositories.TicketRepository;
 import org.springframework.stereotype.Service;
@@ -8,9 +7,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class TicketService {
     private TicketRepository ticketRepository;
-    private TicketEventImpl ticketEvent;
+    private TicketEventService ticketEvent;
 
-    public TicketService(TicketRepository ticketRepository, TicketEventImpl ticketEvent) {
+    public TicketService(TicketRepository ticketRepository, TicketEventService ticketEvent) {
         this.ticketRepository = ticketRepository;
         this.ticketEvent = ticketEvent;
     }

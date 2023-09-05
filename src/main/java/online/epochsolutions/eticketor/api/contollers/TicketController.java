@@ -19,7 +19,7 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/buyTicket")
     public ResponseEntity<TicketResponse> createTicket(@RequestParam String name, @RequestParam String section){
         var ticket = ticketService.createTickets(name,section);
