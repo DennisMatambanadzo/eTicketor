@@ -7,6 +7,6 @@ import org.springframework.data.repository.ListCrudRepository;
 import java.util.List;
 
 public interface TicketRepository extends ListCrudRepository<Ticket, Long> {
-    List<Ticket> findByUser(User user);
+//    List<Ticket> findByUser(User user);
 
 }

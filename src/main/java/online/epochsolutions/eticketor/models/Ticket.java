@@ -47,10 +47,10 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     @Column(name = "section", nullable = false)
     private Section section;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+//
+//    @ManyToOne(optional = false)
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private User user;
 
 }
 

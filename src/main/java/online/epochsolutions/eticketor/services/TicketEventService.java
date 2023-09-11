@@ -33,7 +33,7 @@ public class TicketEventService {
             ticket.setSection(Section.valueOf(section));
             ticket.setPrice(event.getPrice());
             ticket.setStartTime(event.getStartTime());
-            ticket.setUser(user);
+//            ticket.setUser(user);
             event.setRemainingTickets(event.getRemainingTickets()-1);
             if (event.getRemainingTickets()> -1) {
                 eventRepository.save(event);

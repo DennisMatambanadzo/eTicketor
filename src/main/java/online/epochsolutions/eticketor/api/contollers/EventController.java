@@ -20,11 +20,9 @@ import java.util.Optional;
 public class EventController {
 
     private EventService eventService;
-    private TicketService ticketService;
 
-    public EventController(EventService eventService, TicketService ticketService) {
+    public EventController(EventService eventService) {
         this.eventService = eventService;
-        this.ticketService = ticketService;
     }
 
     @PostMapping("/save")
