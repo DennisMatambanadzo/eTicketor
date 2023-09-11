@@ -41,7 +41,6 @@ public class TicketEventService {
             ticket.setPrice(event.getPrice());
             var token = createTicketToken(ticket);
             ticket.setStartTime(event.getStartTime());
-            ticket.setUser(user);
 
             event.setRemainingTickets(event.getRemainingTickets()-1);
             emailService.sendTicketPurchaseEmail(token);

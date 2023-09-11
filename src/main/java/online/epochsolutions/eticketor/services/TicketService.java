@@ -5,14 +5,12 @@ import online.epochsolutions.eticketor.api.auth.services.JWTService;
 import online.epochsolutions.eticketor.exceptions.EmailFailureException;
 import online.epochsolutions.eticketor.models.Ticket;
 import online.epochsolutions.eticketor.models.user.User;
-import online.epochsolutions.eticketor.repositories.TicketRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TicketService {
+
     private final TicketRepository ticketRepository;
     private final TicketEventService ticketEvent;
 
@@ -22,7 +20,7 @@ public class TicketService {
         return ticketEvent.createTicket(name,section,user,host);
     }
 
-    public List<Ticket> ticketList(User user){
-        return ticketRepository.findByUser(user);
-    }
+//    public List<Ticket> ticketList(User user){
+//        return ticketRepository.findByUser(user);
+//    }
 }

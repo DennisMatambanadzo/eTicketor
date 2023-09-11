@@ -40,9 +40,6 @@ public class Ticket {
     @Column(name = "created_timestamp", nullable = false)
     private Timestamp createdTimestamp;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 
 }
 
