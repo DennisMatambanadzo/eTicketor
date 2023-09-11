@@ -64,7 +64,7 @@ public class TicketEventService {
         var token = new TicketToken();
         token.setToken(jwtService.generateJWT(ticket));
         token.setCreatedTimestamp(new Timestamp(System.currentTimeMillis()));
-        token.setUser(ticket.getUser());
+//        token.setUser(ticket.getUser());
         token.setTicket(ticket);
 
         return token;

@@ -23,8 +23,8 @@ public class VerificationToken {
     @Column(name = "created_timestamp", nullable = false)
     private Timestamp createdTimestamp;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.MERGE, optional = false)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
 }

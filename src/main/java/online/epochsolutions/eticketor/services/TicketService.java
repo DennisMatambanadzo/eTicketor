@@ -5,6 +5,7 @@ import online.epochsolutions.eticketor.api.auth.services.JWTService;
 import online.epochsolutions.eticketor.exceptions.EmailFailureException;
 import online.epochsolutions.eticketor.models.Ticket;
 import online.epochsolutions.eticketor.models.user.User;
+import online.epochsolutions.eticketor.repositories.TicketRepository;
 import org.springframework.stereotype.Service;
 
 @Service

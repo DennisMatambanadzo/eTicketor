@@ -43,9 +43,6 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<VerificationToken> verificationTokens = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
@@ -60,6 +57,9 @@ public class User implements UserDetails {
 
     @Column(name = "email_verified", nullable = false)
     private Boolean emailVerified = false;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<VerificationToken> verificationTokens = new ArrayList<>();
 
 
     @JsonIgnore
