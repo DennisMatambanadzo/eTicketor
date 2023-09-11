@@ -28,7 +28,9 @@ public class TicketController {
 
     @PostMapping("/buyTicket")
     public ResponseEntity<TicketResponse> createTicket(@RequestParam String name, @RequestParam String section,@RequestParam String host,@AuthenticationPrincipal User user) throws EmailFailureException {
-        var  ticket = ticketService.createTickets(name,section,user,host);
+
+        var ticket = ticketService.createTickets(name,section,user,host);
+
         TicketResponse response = new TicketResponse();
         response.setName(ticket.getName());
         response.setStartTime(ticket.getStartTime());
