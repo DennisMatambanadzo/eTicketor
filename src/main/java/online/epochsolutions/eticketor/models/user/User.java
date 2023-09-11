@@ -58,7 +58,7 @@ public class User implements UserDetails {
     @Column(name = "email_verified", nullable = false)
     private Boolean emailVerified = false;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VerificationToken> verificationTokens = new ArrayList<>();
 
 
