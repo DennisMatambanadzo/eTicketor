@@ -1,6 +1,6 @@
 # eTicketor
 
-Welcome to eTicketor API
+# Welcome to eTicketor API
 
 This API enables hosts to create events and event goers to purchase ticket for the events online
 
@@ -12,6 +12,8 @@ smtp4dev (fake smtp server) https://github.com/rnwood/smtp4dev/releases/download
 
 SQL Database
 
+Dependency with route mapping, rate limiting and circuit breaking. https://github.com/DennisMatambanadzo/CloudGateway
+
 ****************
 
 
@@ -21,7 +23,7 @@ User,
 Ticket,
 Event.
 
-USER:
+# User
 
 This system houses users with three different roles: User, Admin and Host.
 
@@ -33,7 +35,15 @@ The registration provides the following response:
 
 ![image](https://github.com/DennisMatambanadzo/eTicketor/assets/49873792/86737ff8-97ad-4ada-87d4-cefd856f5b7e)
 
-The next step is to check the stmp server for an email with a token.
+The next step is to check the stmp server for an email with a provided token and copy the token to verify the email.
 
 ![image](https://github.com/DennisMatambanadzo/eTicketor/assets/49873792/7852de4b-6f4d-4f87-ad96-7c932c8a9aa8)
+
+The email verification process takes place by copying the token and pasting it into the *verify email* endpoint
+
+![img_1.png](img_1.png)
+
+At that point the user email is verified
+
+
 
