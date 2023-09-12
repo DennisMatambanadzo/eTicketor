@@ -25,6 +25,8 @@ Event.
 
 # User
 
+### Registration
+
 This system houses users with three different roles: User, Admin and Host.
 
 For each, registration requires a firstname, lastname, email, and password.
@@ -43,7 +45,27 @@ The email verification process takes place by copying the token and pasting it i
 
 ![img_1.png](img_1.png)
 
-At that point the user email is verified
+At that point the user email is verified.
+
+### Login
+
+After verification the user can log in.
+
+The system supports three points of entry for the users depending on the role the registered for.
+
+![img_2.png](img_2.png)
+
+To login the user enters their email and password.
+
+If the email exists in the system and the password matches the API will respond with a JWT token 
+that will be used to authenticate and authorize the user for each endpoint they attempt to access.
+
+![img_3.png](img_3.png)
+
+If both conditions above are not met the API responds with a Bad Request (400) message
+
+![img_4.png](img_4.png)
+
 
 
 
