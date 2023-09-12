@@ -115,4 +115,7 @@ The API will provide the above response after a successful purchase of a ticket.
 ![img_8.png](img_8.png)
 
 
+![image](https://github.com/DennisMatambanadzo/eTicketor/assets/49873792/5cce5203-19be-4b71-9de7-b75ac217ce89)
+
+
     
