@@ -50,7 +50,8 @@ public class TicketEventService {
                 break CREATE_TICKET;
 
             }
-            //TODO: WRITE LOGIC TO CHECK IF THE NUMBER OF TICKETS IS NOT ZERO
+
+            emailService.sendTicketPurchaseNotificationEmail(ticket,user);
             ticketRepository.save(ticket);
             return ticket;
         }else{
