@@ -17,8 +17,8 @@ public class TicketService {
 
 
 //Method to create Tickets
-    public Ticket createTickets(String name, String section, User user,String host) throws EmailFailureException {
-        return ticketEvent.createTicket(name,section,user,host);
+    public Ticket createTickets(String name, String section, User user) throws EmailFailureException {
+        return ticketEvent.createTicket(name,section,user);
     }
 
 //    public List<Ticket> ticketList(User user){

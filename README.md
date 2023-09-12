@@ -67,5 +67,52 @@ If both conditions above are not met the API responds with a Bad Request (400) m
 ![img_4.png](img_4.png)
 
 
+********
+
+# Events
+
+**Only users with the HOST role can create Events**
+
+![img_5.png](img_5.png)
+
+An event object has to have the following fields:
+
+**Name**
+
+**Event Description**
+
+**Location**
+
+**Start Time**
+
+**End Time**
+
+**Age Restriction**
+
+**Number of Tickets available for purchase**
+
+**Ticket Price**
 
 
+A successful submission of an event will yield the following response:
+
+![img_6.png](img_6.png)
+****
+
+## Ticket
+
+**Only a user with the USER role can purchase a ticket**
+
+![img_7.png](img_7.png)
+ The parameters required to purchase a ticket are to provide:
+
+**Event Name**
+
+**Section.**
+
+The API will provide the above response after a successful purchase of a ticket.
+
+![img_8.png](img_8.png)
+
+
+    
