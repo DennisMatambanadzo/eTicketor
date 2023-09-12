@@ -6,13 +6,13 @@ This API enables hosts to create events and event goers to purchase ticket for t
 
 Tools required to run the application are:
 
-### IntelliJ IDEA
+#### IntelliJ IDEA
 
-### smtp4dev (fake smtp server) https://github.com/rnwood/smtp4dev/releases/download/3.2.0-ci20221023104/Rnwood.Smtp4dev-win-x64-3.2.0-ci20221023104.zip
+#### smtp4dev (fake smtp server) https://github.com/rnwood/smtp4dev/releases/download/3.2.0-ci20221023104/Rnwood.Smtp4dev-win-x64-3.2.0-ci20221023104.zip
 
-### MySQL Database
+#### MySQL Database
 
-### Dependency with route mapping, rate limiting and circuit breaking. https://github.com/DennisMatambanadzo/CloudGateway
+#### Dependency with route mapping, rate limiting and circuit breaking. https://github.com/DennisMatambanadzo/CloudGateway
 
 ****************
 
