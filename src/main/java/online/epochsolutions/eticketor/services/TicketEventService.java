@@ -29,35 +29,37 @@ public class TicketEventService {
 
     public Ticket createTicket(String name, String section, User user) throws EmailFailureException {
 
+
+
         var opEvent = eventRepository.findByNameIgnoreCase(name);
-        CREATE_TICKET: if (opEvent.isPresent()){
-            Event event = opEvent.get();
-            Ticket ticket = new Ticket();
-
-            ticket.setName(event.getName());
-            ticket.setEndTime(event.getEndTime());
-            ticket.setLocation(event.getLocation());
-            ticket.setSection(Section.valueOf(section));
-            ticket.setPrice(event.getPrice());
-            ticket.setStartTime(event.getStartTime());
-            ticket.setCreatedTimestamp(new Timestamp(System.currentTimeMillis()));
-            event.setRemainingTickets(event.getRemainingTickets()-1);
-
-
-            if (event.getRemainingTickets()> -1) {
-                eventRepository.save(event);
-            }else {
-                break CREATE_TICKET;
-
-            }
-
-            emailService.sendTicketPurchaseNotificationEmail(ticket,user);
-            ticketRepository.save(ticket);
-            return ticket;
-        }else{
+        if (opEvent.isPresent()){
             return new Ticket();
         }
-        return new Ticket();
+        Event event = opEvent.get();
+
+//        @Red
+//        if (event.getRemainingTickets() == 0) {
+//            return new Ticket();
+//        }
+
+
+        Ticket ticket = new Ticket();
+
+        ticket.setName(event.getName());
+        ticket.setEndTime(event.getEndTime());
+        ticket.setLocation(event.getLocation());
+        ticket.setSection(Section.valueOf(section));
+//        ticket.setPrice(event.getPrice());
+        ticket.setStartTime(event.getStartTime());
+        ticket.setCreatedTimestamp(new Timestamp(System.currentTimeMillis()));
+        ticketRepository.save(ticket);
+//        event.setRemainingTickets(event.getRemainingTickets()-1);
+        eventRepository.save(event);
+
+        emailService.sendTicketPurchaseNotificationEmail(ticket,user);
+
+        return ticket;
+
     }
 
 //    private TicketToken createTicketToken(Ticket ticket){
@@ -72,5 +74,7 @@ public class TicketEventService {
     public User findHost(String host){
         return userRepository.findByRoleAndFirstNameIgnoreCase(Role.HOST,host);
     }
+
+
 
 }

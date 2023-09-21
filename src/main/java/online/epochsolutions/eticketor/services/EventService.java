@@ -3,12 +3,13 @@ package online.epochsolutions.eticketor.services;
 import online.epochsolutions.eticketor.api.dtos.EventBody;
 import online.epochsolutions.eticketor.exceptions.UserNotAuthorized;
 import online.epochsolutions.eticketor.models.Event;
-import online.epochsolutions.eticketor.models.user.Role;
+import online.epochsolutions.eticketor.models.user.TicketType;
 import online.epochsolutions.eticketor.models.user.User;
 import online.epochsolutions.eticketor.repositories.EventRepository;
+import online.epochsolutions.eticketor.repositories.TicketTypeRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,10 +17,13 @@ import java.util.Optional;
 @Service
 public class EventService{
     private final EventRepository eventRepository;
+    private final TicketTypeRepository ticketTypeRepository;
 
 
-    public EventService(EventRepository eventRepository) {
+
+    public EventService(EventRepository eventRepository, TicketTypeRepository ticketTypeRepository) {
         this.eventRepository = eventRepository;
+        this.ticketTypeRepository = ticketTypeRepository;
     }
 
     public void saveEvent(EventBody eventBody,User user) throws UserNotAuthorized {
@@ -29,17 +33,23 @@ public class EventService{
 
         
         Event event = new Event();
-        event.setUser(user);
+        List<TicketType> ticketTypeList = new ArrayList<>();
+
         event.setName(eventBody.getName());
-        event.setEventDescription(eventBody.getEventDescription());
         event.setLocation(eventBody.getLocation());
-        event.setEndTime(eventBody.getEndTime());
         event.setStartTime(eventBody.getStartTime());
-        event.setPrice(eventBody.getPrice());
-        event.setSlots(eventBody.getNumberOfTickets());
-        event.setRemainingTickets(eventBody.getNumberOfTickets());
+        event.setEndTime(eventBody.getEndTime());
+        event.setEventDescription(eventBody.getEventDescription());
         event.setAgeLimit(eventBody.getAgeLimit());
+        event.setTicketCount(eventBody.getInitialTicketCount());
+        event.setUser(user);
+        for (TicketType ticketType : eventBody.getTicketType()){
+            ticketType.setEvent(event);
+            ticketTypeList.add(ticketType);
+        }
+
         eventRepository.save(event);
+        ticketTypeRepository.saveAll(ticketTypeList);
     }
 
     public List<Event> getEvents() {

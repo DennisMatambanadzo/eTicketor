@@ -9,4 +9,6 @@ import java.util.List;
 public interface TicketRepository extends ListCrudRepository<Ticket, Long> {
 //    List<Ticket> findByUser(User user);
 
+
+
 }

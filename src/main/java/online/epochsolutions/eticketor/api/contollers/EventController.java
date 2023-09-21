@@ -6,20 +6,17 @@ import online.epochsolutions.eticketor.api.dtos.EventResponse;
 import online.epochsolutions.eticketor.models.Event;
 import online.epochsolutions.eticketor.models.user.User;
 import online.epochsolutions.eticketor.services.EventService;
-import online.epochsolutions.eticketor.services.TicketService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("eTicketor/event")
 public class EventController {
 
-    private EventService eventService;
+    private final EventService eventService;
 
     public EventController(EventService eventService) {
         this.eventService = eventService;
@@ -36,7 +33,7 @@ public class EventController {
         response.setStartTime(body.getStartTime());
         response.setAgeLimit(body.getAgeLimit());
         response.setPrice(body.getPrice());
-        response.setNumberOfTickets(body.getNumberOfTickets());
+        response.setNumberOfTickets(body.getInitialTicketCount());
 
         return ResponseEntity.ok(response);
     }
@@ -52,10 +49,10 @@ public class EventController {
         return ResponseEntity.ok(eventService.getEvents());
     }
 
-    @GetMapping("/getEvent/{id}")
-    public ResponseEntity<Optional<Event>> getEvent(@RequestParam Long id){
-        return ResponseEntity.ok(eventService.getEvent(id));
-    }
+//    @GetMapping("/getEvent/{id}")
+//    public ResponseEntity<Optional<Event>> getEvent(@RequestParam Long id){
+//        return ResponseEntity.ok(eventService.getEvent(id));
+//    }
 
 
     @DeleteMapping("/delete/{id}")
@@ -70,20 +67,20 @@ public class EventController {
 
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<EventResponse> updateEvent(@PathVariable Long id,@AuthenticationPrincipal User user, @RequestBody EventBody body){
-        eventService.updateEvent(body, user, id);
-        EventResponse response = new EventResponse();
-        response.setName(body.getName());
-        response.setEventDescription(body.getEventDescription());;
-        response.setStartTime(body.getStartTime());
-        response.setEndTime(body.getEndTime());
-        response.setAgeLimit(body.getAgeLimit());
-        response.setLocation(body.getLocation());
-        response.setNumberOfTickets(body.getNumberOfTickets());
-        response.setPrice(body.getPrice());
-        return ResponseEntity.ok(response);
-    }
+//    @PutMapping("/update/{id}")
+//    public ResponseEntity<EventResponse> updateEvent(@PathVariable Long id,@AuthenticationPrincipal User user, @RequestBody EventBody body){
+//        eventService.updateEvent(body, user, id);
+//        EventResponse response = new EventResponse();
+//        response.setName(body.getName());
+//        response.setEventDescription(body.getEventDescription());;
+//        response.setStartTime(body.getStartTime());
+//        response.setEndTime(body.getEndTime());
+//        response.setAgeLimit(body.getAgeLimit());
+//        response.setLocation(body.getLocation());
+//        response.setNumberOfTickets(body.getInitialTicketCount());
+//        response.setPrice(body.getPrice());
+//        return ResponseEntity.ok(response);
+//    }
 
 
 }

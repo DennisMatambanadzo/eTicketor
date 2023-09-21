@@ -3,7 +3,6 @@ package online.epochsolutions.eticketor.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import online.epochsolutions.eticketor.models.user.User;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -36,6 +35,7 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     @Column(name = "section", nullable = false)
     private Section section;
+
 
     @Column(name = "created_timestamp", nullable = false)
     private Timestamp createdTimestamp;
