@@ -25,12 +25,6 @@ public class Event {
     @Column(name = "location", nullable = false)
     private String location;
 
-//    @Column(name = "remaining_tickets", nullable = false)
-//    private Long remainingTickets;
-//
-    @Column(name = "slots", nullable = false)
-    private Long TicketCount;
-
     @Column(name = "start_time", nullable = false)
     private Instant startTime;
 
@@ -43,9 +37,6 @@ public class Event {
 
     @Column(name = "age_limit")
     private Integer ageLimit;
-
-//    @Column(name = "price", nullable = false)
-//    private Double price;
 
 
     @JsonIgnore

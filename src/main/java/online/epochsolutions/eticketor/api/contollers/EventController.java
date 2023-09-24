@@ -32,8 +32,8 @@ public class EventController {
         response.setEndTime(body.getEndTime());
         response.setStartTime(body.getStartTime());
         response.setAgeLimit(body.getAgeLimit());
-        response.setPrice(body.getPrice());
-        response.setNumberOfTickets(body.getInitialTicketCount());
+//        response.setPrice(body.getPrice());
+//        response.setNumberOfTickets(body.getInitialTicketCount());
 
         return ResponseEntity.ok(response);
     }

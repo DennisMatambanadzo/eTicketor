@@ -3,7 +3,7 @@ package online.epochsolutions.eticketor.services;
 import online.epochsolutions.eticketor.api.dtos.EventBody;
 import online.epochsolutions.eticketor.exceptions.UserNotAuthorized;
 import online.epochsolutions.eticketor.models.Event;
-import online.epochsolutions.eticketor.models.user.TicketType;
+import online.epochsolutions.eticketor.models.TicketType;
 import online.epochsolutions.eticketor.models.user.User;
 import online.epochsolutions.eticketor.repositories.EventRepository;
 import online.epochsolutions.eticketor.repositories.TicketTypeRepository;
@@ -33,23 +33,21 @@ public class EventService{
 
         
         Event event = new Event();
-        List<TicketType> ticketTypeList = new ArrayList<>();
-
+        event.setEventDescription(eventBody.getEventDescription());
         event.setName(eventBody.getName());
-        event.setLocation(eventBody.getLocation());
         event.setStartTime(eventBody.getStartTime());
         event.setEndTime(eventBody.getEndTime());
-        event.setEventDescription(eventBody.getEventDescription());
         event.setAgeLimit(eventBody.getAgeLimit());
-        event.setTicketCount(eventBody.getInitialTicketCount());
+        event.setLocation(eventBody.getLocation());
         event.setUser(user);
-        for (TicketType ticketType : eventBody.getTicketType()){
-            ticketType.setEvent(event);
-            ticketTypeList.add(ticketType);
-        }
+
+        TicketType ticketType = new TicketType();
+        ticketType.setBronze(eventBody.getBronzeTicket().getCount());
+        ticketType.setGold(eventBody.getGoldTicket().getCount());
+        ticketType.setSilver(eventBody.getSilverTicket().getCount());
 
         eventRepository.save(event);
-        ticketTypeRepository.saveAll(ticketTypeList);
+        ticketTypeRepository.save(ticketType);
     }
 
     public List<Event> getEvents() {

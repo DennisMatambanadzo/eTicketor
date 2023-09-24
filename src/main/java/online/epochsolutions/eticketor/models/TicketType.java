@@ -1,4 +1,4 @@
-package online.epochsolutions.eticketor.models.user;
+package online.epochsolutions.eticketor.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,17 +18,13 @@ public class TicketType {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "price", nullable = false)
-    private Double price;
+    @Column(name = "bronze", nullable = false)
+    private Long bronze;
 
-    @Column(name = "current_count", nullable = false)
-    private Long currentCount;
+    @Column(name = "silver", nullable = false)
+    private Long silver;
 
-    @Column(name = "initial_count", nullable = false)
-    private Long initialCount;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "event_id", nullable = false)
-    private Event event;
+    @Column(name = "gold", nullable = false)
+    private Long gold;
 
 }
