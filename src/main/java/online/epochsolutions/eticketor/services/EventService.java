@@ -4,12 +4,13 @@ import online.epochsolutions.eticketor.api.dtos.EventBody;
 import online.epochsolutions.eticketor.exceptions.UserNotAuthorized;
 import online.epochsolutions.eticketor.models.Event;
 import online.epochsolutions.eticketor.models.TicketType;
+import online.epochsolutions.eticketor.models.TicketPrice;
 import online.epochsolutions.eticketor.models.user.User;
 import online.epochsolutions.eticketor.repositories.EventRepository;
+import online.epochsolutions.eticketor.repositories.TicketPriceRepository;
 import online.epochsolutions.eticketor.repositories.TicketTypeRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,12 +19,14 @@ import java.util.Optional;
 public class EventService{
     private final EventRepository eventRepository;
     private final TicketTypeRepository ticketTypeRepository;
+    private final TicketPriceRepository ticketPriceRepository;
 
 
 
-    public EventService(EventRepository eventRepository, TicketTypeRepository ticketTypeRepository) {
+    public EventService(EventRepository eventRepository, TicketTypeRepository ticketTypeRepository, TicketPriceRepository ticketPriceRepository) {
         this.eventRepository = eventRepository;
         this.ticketTypeRepository = ticketTypeRepository;
+        this.ticketPriceRepository = ticketPriceRepository;
     }
 
     public void saveEvent(EventBody eventBody,User user) throws UserNotAuthorized {
@@ -42,12 +45,19 @@ public class EventService{
         event.setUser(user);
 
         TicketType ticketType = new TicketType();
+        ticketType.setEvent(event);
         ticketType.setBronze(eventBody.getBronzeTicket().getCount());
         ticketType.setGold(eventBody.getGoldTicket().getCount());
         ticketType.setSilver(eventBody.getSilverTicket().getCount());
 
+        TicketPrice ticketPrice = new TicketPrice();
+        ticketPrice.setEvent(event);
+        ticketPrice.setBronze(eventBody.getBronzeTicket().getPrice());
+        ticketPrice.setSilver(eventBody.getSilverTicket().getPrice());
+        ticketPrice.setGold(eventBody.getGoldTicket().getPrice());
         eventRepository.save(event);
         ticketTypeRepository.save(ticketType);
+        ticketPriceRepository.save(ticketPrice);
     }
 
     public List<Event> getEvents() {

@@ -1,4 +1,4 @@
-package online.epochsolutions.eticketor.models.user;
+package online.epochsolutions.eticketor.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,5 +22,10 @@ public class TicketPrice {
 
     @Column(name = "gold", nullable = false)
     private Double gold;
+
+
+    @OneToOne(optional = false, orphanRemoval = true)
+    @JoinColumn(name = "event_id", nullable = false, unique = true)
+    private Event event;
 
 }

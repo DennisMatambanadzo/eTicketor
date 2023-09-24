@@ -27,4 +27,7 @@ public class TicketType {
     @Column(name = "gold", nullable = false)
     private Long gold;
 
+    @OneToOne(optional = false, orphanRemoval = true)
+    @JoinColumn(name = "event_id", nullable = false, unique = true)
+    private Event event;
 }
